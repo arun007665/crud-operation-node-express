@@ -1,8 +1,9 @@
-//db connecr
+//db connect
 const mongoose=require(`mongoose`)
 
 const connectdb=async ()=>{
-    if(process.env.MODE === "development"){
+    if(process.env.MODE === "development")
+    {
         await mongoose.connect(process.env.MONGO_LOCAL)
         .then(res=>{
             console.log(`local mongodb connected`)
@@ -12,7 +13,8 @@ const connectdb=async ()=>{
 
     //cloud database
 
-    if(process.env.MODE === "production"){
+    if(process.env.MODE === "production")
+    {
         await mongoose.connect(process.env.MONGO_CLOUD)
         .then(res =>{
             console.log(`cloud mongodb connected`)

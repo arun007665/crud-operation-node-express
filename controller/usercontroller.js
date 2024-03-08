@@ -45,15 +45,28 @@ const readsingleuser=async (req,res)=>{
 //update user
 const updateuser=async (req,res)=>{
     try {
-        return res.status(200).json({status:true,msg:"update the user"})
+        let id=req.params.id
+        let single=await user.findById(id)
+            if(!single)
+                 return res.status(400).json({status:false,msg:"id not found"})
+                await user.findByIdAndUpdate({_id: id},req.body)
+        return res.status(200).json({status:true,msg:"Successfully Updated"})
     } catch (error) {
-        return res.status(500).json({status:false,msg:"REquested Path NOt found"})
+            if(error.codeName === "DuplicateKey"){
+                return res.status(400).json({status:false,msg:`Duplicate input,value already Exists`})
+            }
+        return res.status(500).json({status:false,msg:"REquested Path Not found"})
     }
 }
 //update user
 const deleteuser=async (req,res)=>{
     try {
-        return res.status(200).json({status:true,msg:" user account delete"})
+        let id=req.params.id
+        let single=await user.findById(id)
+            if(!single)
+             return res.status(400).json({status:false,msg:"id not found"})
+            await user.findByIdAndDelete(id)
+        return res.status(200).json({status:true,msg:" Account Successfully Deleted "})
     } catch (error) {
         return res.status(500).json({status:false,msg:"REquested Path NOt found"})
     }
